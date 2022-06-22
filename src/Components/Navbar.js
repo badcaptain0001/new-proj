@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function Navbar({ addEmp }) {
+function Navbar({ addEmp,hi }) {
+  console.log(hi);
   return (
     <>
       <nav className="navbar navbar-dark bg-dark" style={{ height: "55px" }}>

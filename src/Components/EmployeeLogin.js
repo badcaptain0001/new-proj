@@ -6,6 +6,9 @@ import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import axios from "axios";
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './admin.css'
 const EmployeeLogin = () => {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -33,8 +36,7 @@ const EmployeeLogin = () => {
     if (localData) {
       setLocalData(JSON.parse(localData));
       console.log(JSON.parse(localData));
-    }
-    else {
+    } else {
       setLocalData(null);
     }
   }, []);
@@ -50,17 +52,18 @@ const EmployeeLogin = () => {
     endDate: endDate,
     leaveType: leaveType,
     leaveOption: leaveOption,
-  }
+  };
   const handleApplyLeave = () => {
-    axios.post('https://marketplaceb.herokuapp.com/api/applyleave', leaveData)
+    axios
+      .post("https://marketplaceb.herokuapp.com/api/applyleave", leaveData)
       .then((res) => {
         console.log(res.data);
         closeModal();
       })
       .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
   const customStyles = {
     content: {
       top: "50%",
@@ -112,78 +115,106 @@ const EmployeeLogin = () => {
         </div>
       </nav>
       <div>
-        <iframe
-          src="https://embed.lottiefiles.com/animation/53968"
-          className="gif2"
-          title="a3"
-        ></iframe>
+        <Carousel autoPlay>
+          <div className="sliderImg">
+            <img alt="" src="https://i.picsum.photos/id/119/3264/2176.jpg?hmac=PYRYBOGQhlUm6wS94EkpN8dTIC7-2GniC3pqOt6CpNU" />
+            <p className="legend">Employee leave management system combine number of processes and systems to automate and easily manage employee data, leave request, track and grant leave. In many institution staff are entitled to different types of leave, these leave are granted according to institution policy. Administrative department is mostly responsible for managing and granting leave request. To this end, most institution used conventional method of requesting, granting and managing leave. </p>
+          </div>
+          <div className="sliderImg">
+            <img alt="" src="https://i.picsum.photos/id/1/5616/3744.jpg?hmac=kKHwwU8s46oNettHKwJ24qOlIAsWN9d2TtsXDoCWWsQ" />
+            <p className="legend">In conventional method, leave is manually request by writing letter to head of department. The head of department minutes and forward the request to higher staff for approval. This method is time consuming, prone to error, require more paper work and difficult to manage.Hence the need for an automated leave management system that is faster, error free, less paper work and easy to manage.</p>
+          </div>
+          <div className="sliderImg">
+            <img alt="" src="https://i.picsum.photos/id/160/3200/2119.jpg?hmac=cz68HnnDt3XttIwIFu5ymcvkCp-YbkEBAM-Zgq-4DHE" />
+            <p className="legend">leave management system is a system that employers use to allow employees to request leave and managers to approve requests made by employees. In the past, this was done manually by using sheets of paper to keep track of how much leave time employees had available. With an automated leave management system, you don’t have to worry about losing paperwork or missing employees’ requests for time off.
+              Using an automated time and leave management system, and utilizing an adaptable HRIS platform, is an important part of modernizing your business practices. A good leave management system is cloud-based, automated, and digitalized, so requesting and approving time off is easy and you don’t have to worry about any paper records getting lost.</p>
+          </div>
+          <div className="sliderImg">
+            <img alt="" src="https://i.picsum.photos/id/180/2400/1600.jpg?hmac=Ig-CXcpNdmh51k3kXpNqNqcDYTwXCIaonYiBOnLXBb8" />
+            <p className="legend">Employee leave management system combine number of processes and systems to automate and easily manage employee data, leave request, track and grant leave. In many institution staff are entitled to different types of leave, these leave are granted according to institution policy. Administrative department is mostly responsible for managing and granting leave request. To this end, most institution used conventional method of requesting, granting and managing leave. In conventional method, leave is manually request by writing letter to head of department. The head of department minutes and forward the request to higher staff for approval. This method is time consuming, prone to error, require more paper work and difficult to manage. Hence the need for an automated leave management system that is faster, error free, less paper work and easy to manage.</p>
+          </div>
+        </Carousel>
       </div>
-      {localData&& <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h3>Apply Leave</h3>
-        <div style={{ marginTop: "20px" }}>
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              justifyContent: "center",
-              marginBottom: "20px",
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-                <input
-                  type="text"
-                  placeholder="EmpId"
-                  value={localData.empId}
-                  onChange={(e) => setEmpId(e.target.value)}
-                ></input>
-                <select onChange={(e) => setLeaveType(e.target.value)}>
-                  <option value="fullDay">Full Day</option>
-                  <option value="halfDay">Half Day</option>
-                </select>
-                <select onChange={(e) => setLeaveOption(e.target.value)}>
-                  <option value="sickLeave">Sick Leave</option>
-                  <option value="casualLeave">Casual Leave</option>
-                  <option value="EarnedLeave">Earned Leave</option>
-                </select>
+      {localData && (
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h3>Apply Leave</h3>
+          <div style={{ marginTop: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "20px",
+                justifyContent: "center",
+                marginBottom: "20px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "20px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <input
+                    type="text"
+                    placeholder="EmpId"
+                    value={localData.empId}
+                    onChange={(e) => setEmpId(e.target.value)}
+                  ></input>
+                  <select onChange={(e) => setLeaveType(e.target.value)}>
+                    <option value="fullDay">Full Day</option>
+                    <option value="halfDay">Half Day</option>
+                  </select>
+                  <select onChange={(e) => setLeaveOption(e.target.value)}>
+                    <option value="sickLeave">Sick Leave</option>
+                    <option value="casualLeave">Casual Leave</option>
+                    <option value="EarnedLeave">Earned Leave</option>
+                  </select>
+                </div>
+                <DateRangePicker
+                  onChange={(item) => setDate([item.selection])}
+                  moveRangeOnFirstSelection={false}
+                  ranges={date}
+                  className="customDateSelect"
+                />
               </div>
-              <DateRangePicker
-                onChange={(item) => setDate([item.selection])}
-                moveRangeOnFirstSelection={false}
-                ranges={date}
-                className="customDateSelect"
-              />
             </div>
           </div>
-        </div>
-        <button className="btn btn-success" onClick={handleApplyLeave}>
-          Apply
-        </button>
-      </Modal>}
-      {localData && 
-      <Modal
-        isOpen={usermodalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={afterOpenModal1}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-      <h3>User Details</h3>
-      <div>
-        <div>Name:{localData.name}</div>
-        <div>Address:{localData.address}</div>
-        <div>Phone:{localData.phone}</div>
-        <div>Email:{localData.email}</div>
-        <div>Designation:{localData.position}</div>
-      </div>
-      </Modal>
-      }
+          <button className="btn btn-success" onClick={handleApplyLeave}>
+            Apply
+          </button>
+        </Modal>
+      )}
+      {localData && (
+        <Modal
+          isOpen={usermodalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={afterOpenModal1}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h3>User Details</h3>
+          <div>
+            <div>Name:{localData.name}</div>
+            <div>Address:{localData.address}</div>
+            <div>Phone:{localData.phone}</div>
+            <div>Email:{localData.email}</div>
+            <div>Designation:{localData.position}</div>
+          </div>
+        </Modal>
+      )}
     </React.Fragment>
   );
 };

@@ -45,7 +45,6 @@ const Home = () => {
             className="btn btn-secondary"
             style={{ opacity: "0.87", fontWeight: 700 }}
           >
-            {" "}
             Admin Login
           </Link>
         </div>
@@ -86,8 +85,13 @@ const Home = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div onClick={handleLogin} className="btn btn-success mb-4">
-            <i className=" fa fa-sign-in" /> Login
+          <div style={{display:'flex',gap:'10px',justifyContent:'center'}}>
+            <div onClick={handleLogin} className="btn btn-success mb-4">
+              <i className=" fa fa-sign-in" /> Login
+            </div>
+            <Link to={"/registeremp"}  className="btn btn-warning mb-4">
+              <i className=" fa fa-sign-in" /> Register
+            </Link>
           </div>
         </form>
       </div>

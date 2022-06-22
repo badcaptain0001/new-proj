@@ -16,7 +16,7 @@ function Maintenance() {
   }, []);
   return (
     <>
-      <Navbar />
+      <Navbar hi={'hiiiiii'} />
       <div style={{marginTop:'50px'}}>
         <h2>Leave Applied By Employees</h2>
         <table class="GeneratedTable">

@@ -21,3 +21,8 @@ table.GeneratedTable th {
 table.GeneratedTable thead {
   background-color: darkgray;
 }
+.sliderImg img { 
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
