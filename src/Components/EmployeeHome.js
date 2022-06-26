@@ -63,7 +63,7 @@ const Home = () => {
         <br></br>
         <form>
           <div className="mb-4">
-            <h5>Employee ID: </h5>
+            <h5>Employee email: </h5>
             <input
               type="text"
               className="form-control"

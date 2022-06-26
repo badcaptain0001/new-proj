@@ -1,8 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 const Home = () => {
+  const [userId, setUserId] = React.useState("");
+  const [userPass, setUserPass] = React.useState("");
+
+  const handelLogin = () => {
+    const loginData = {
+      adminId: userId,
+      password: userPass
+    }
+    axios.post("https://marketplaceb.herokuapp.com/api/loginadmin", loginData)
+      .then(res => {
+        if (res.data.data != null) {
+          if (res.data.data === null) {
+            toast.error("Invalid Credentials");
+          }
+          else {
+            window.location.href = "admin-login";
+          }
+        }
+      }
+      ).catch(err => {
+        console.log(err);
+        toast.error("Invalid Credentials");
+      }
+      )
+  }
   return (
     <div>
+      <Toaster />
       <nav className="navbar navbar-dark bg-dark" style={{ height: "55px" }}>
         <div className="container">
           <span
@@ -35,13 +63,14 @@ const Home = () => {
         <br></br>
         <form>
           <div className="mb-4">
-            <h5 style={{ display: "inline-block" }}>Admin:</h5>
+            <h5 style={{ display: "inline-block" }}>Admin Id:</h5>
             <input
               type="text"
               className="form-control"
               style={{ width: "80%", margin: "auto" }}
               placeholder="enter your admin Id"
               required
+              onChange={(e) => setUserId(e.target.value)}
             />
           </div>
           <br></br>
@@ -53,13 +82,14 @@ const Home = () => {
               style={{ width: "80%", margin: "auto" }}
               placeholder="enter your password"
               required
+              onChange={(e) => setUserPass(e.target.value)}
             />
           </div>
           <div className="mb-4">
             <br></br>
-            <Link to={"/admin-login"} className="btn btn-success">
+            <div className="btn btn-success" onClick={handelLogin}>
               <i className=" fa fa-sign-in" /> Login
-            </Link>
+            </div>
           </div>
         </form>
       </div>
