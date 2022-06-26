@@ -12,6 +12,7 @@ import './admin.css'
 const EmployeeLogin = () => {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen1, setIsOpen1] = useState(false);
   const [usermodalIsOpen, setUserIsOpen] = useState(false);
   const [empId, setEmpId] = useState("");
   const [date, setDate] = useState([
@@ -26,6 +27,8 @@ const EmployeeLogin = () => {
   const [leaveType, setLeaveType] = useState("fullday");
   const [leaveOption, setLeaveOption] = useState("sickLeave");
   const [localData, setLocalData] = useState();
+  const [saveNews, setSaveNews] = useState();
+  const [showReward, setShowReward] = useState();
   useEffect(() => {
     setStartDate(convert(date[0].startDate));
     setEndDate(convert(date[0].endDate));
@@ -39,6 +42,12 @@ const EmployeeLogin = () => {
     } else {
       setLocalData(null);
     }
+  }, []);
+  useEffect(() => {
+    axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=0b891d97f1f948d687e340f83eee1f90').then(res => {
+      console.log(res.data.articles);
+      setSaveNews(res.data.articles);
+    }).catch(err => { })
   }, []);
   function convert(str) {
     var date = new Date(str),
@@ -79,6 +88,10 @@ const EmployeeLogin = () => {
   function openModal() {
     setIsOpen(true);
   }
+  function openModal2() {
+    setIsOpen1(true);
+    getReward();
+  }
   function openModal1() {
     setUserIsOpen(true);
   }
@@ -90,9 +103,23 @@ const EmployeeLogin = () => {
   function closeModal() {
     setIsOpen(false);
   }
+  function closeModal2() {
+    setIsOpen1(false);
+  }
   function afterOpenModal1() {
     setUserIsOpen(false);
   }
+  const getReward = () => {
+    axios
+      .get("https://marketplaceb.herokuapp.com/api/showrewards")
+      .then((res) => {
+        console.log(res.data);
+        setShowReward(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <React.Fragment>
       <nav className="navbar navbar-dark bg-primary" style={{ height: "50px" }}>
@@ -105,6 +132,9 @@ const EmployeeLogin = () => {
           </div>
           <div className="btn btn-warning" onClick={openModal}>
             <i className="fa fa-calendar" /> apply for leave
+          </div>
+          <div className="btn btn-warning" onClick={openModal2}>
+            <i className="fa fa-trophy" /> Rewards
           </div>
           <Link to={"/call-hr"} className="btn btn-warning">
             <i className="fa fa-phone-square" /> call to HR
@@ -134,6 +164,20 @@ const EmployeeLogin = () => {
             <p className="legend">Employee leave management system combine number of processes and systems to automate and easily manage employee data, leave request, track and grant leave. In many institution staff are entitled to different types of leave, these leave are granted according to institution policy. Administrative department is mostly responsible for managing and granting leave request. To this end, most institution used conventional method of requesting, granting and managing leave. In conventional method, leave is manually request by writing letter to head of department. The head of department minutes and forward the request to higher staff for approval. This method is time consuming, prone to error, require more paper work and difficult to manage. Hence the need for an automated leave management system that is faster, error free, less paper work and easy to manage.</p>
           </div>
         </Carousel>
+      </div>
+      <div style={{ height: '500px', overflow: 'auto' }}>
+        <h1>Latest News</h1>
+        {saveNews && saveNews.map((news, index) => {
+          return (
+            <div className="card mainNewsContainer" key={index}>
+              <div className="card-body">
+                <h5 className="card-title">{news.title}</h5>
+                <p className="card-text">{news.description}</p>
+                <p className="card-text">{news.author}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
       {localData && (
         <Modal
@@ -215,6 +259,30 @@ const EmployeeLogin = () => {
           </div>
         </Modal>
       )}
+      <Modal
+        isOpen={modalIsOpen1}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal2}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div style={{ height: '300px', overflow: 'auto' }}>
+          {showReward && showReward.map((reward, index) => {
+            return (
+              <div className="card rewardsContainer" key={index}>
+                <div className={!reward.rewardText?'card-body':'card-body green'}>
+                  <h5 className="card-title">{reward.name} {reward.empId}</h5>
+                  <div style={{display:'flex', gap:'30px',fontWeight:'700'}}>
+                    <p className="card-text">{reward.rewards}</p>
+                    <p className="card-text">{!reward.rewardText ? 'no reward' : reward.rewardText}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+          )}
+        </div>
+      </Modal>
     </React.Fragment>
   );
 };
