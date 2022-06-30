@@ -36,3 +36,11 @@ table.GeneratedTable thead {
 .green{
   background-color: #86d786;
 }
+.showImage{
+  height:300px;
+  width:auto;
+  object-fit: cover;
+}
+.hideImage{
+  display: none;
+}

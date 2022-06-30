@@ -38,14 +38,13 @@ const EmployeeLogin = () => {
     let localData = localStorage.getItem("empDetails");
     if (localData) {
       setLocalData(JSON.parse(localData));
-      console.log(JSON.parse(localData));
+      setEmpId(JSON.parse(localData).empId);
     } else {
       setLocalData(null);
     }
   }, []);
   useEffect(() => {
     axios.get('https://newsapi.org/v2/top-headlines?country=in&apiKey=0b891d97f1f948d687e340f83eee1f90').then(res => {
-      console.log(res.data.articles);
       setSaveNews(res.data.articles);
     }).catch(err => { })
   }, []);
@@ -172,6 +171,7 @@ const EmployeeLogin = () => {
             <div className="card mainNewsContainer" key={index}>
               <div className="card-body">
                 <h5 className="card-title">{news.title}</h5>
+                <img src ={news.urlToImage} alt="" className={news.urlToImage===null?'hideImage':'showImage'}/>
                 <p className="card-text">{news.description}</p>
                 <p className="card-text">{news.author}</p>
               </div>
@@ -215,7 +215,6 @@ const EmployeeLogin = () => {
                     type="text"
                     placeholder="EmpId"
                     value={localData.empId}
-                    onChange={(e) => setEmpId(e.target.value)}
                   ></input>
                   <select onChange={(e) => setLeaveType(e.target.value)}>
                     <option value="fullDay">Full Day</option>

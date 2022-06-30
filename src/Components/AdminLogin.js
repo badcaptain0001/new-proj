@@ -22,7 +22,6 @@ const EmployeeLogin = (addEmp) => {
   const [showEmpInfo, setShowEmpInfo] = useState(false);
   const [rewardType, setRewardType] = useState("");
   const [rewardText, setRewardText] = useState("");
-  const [sendAward, setSendAward] = useState(false);
   const [saveEmpId, setSaveEmpId] = useState("");
   let subtitle;
   const customStyles = {
